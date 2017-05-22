@@ -15,6 +15,8 @@ For each project, the data root and mapfile root is set in `config.py`, and also
 
 Data is published with `--set-replica` flag.
 
+The publication script will automatically obtain a certificate via myproxy if needed. If a certificate already exists at the correct path and is not already expired or about to expire (in the next hour), then no myproxy request is made.
+
 ## Installation
 
 Create and activate a virtual environment, edit `config.py` as required, and then `python setup.py install` into the venv.
