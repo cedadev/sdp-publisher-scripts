@@ -55,7 +55,7 @@ def _sp_preexec():
     """
     set umask and egid
     """
-    os.umask(002)
+    os.umask(0777 - config.dir_mode)
     
 
 
