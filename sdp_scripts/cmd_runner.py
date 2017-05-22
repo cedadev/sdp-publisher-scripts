@@ -6,8 +6,7 @@ import string
 import subprocess
 import os
 import sys
-
-publisher_dir = "/group_workspaces/jasmin/esgf_fedcheck/publisher"
+import config
 
 def run_command(cmd, args, log=None, add_ini_arg=True, abort_on_fail=True, verbose=False):
     """
@@ -28,11 +27,14 @@ def run_command(cmd, args, log=None, add_ini_arg=True, abort_on_fail=True, verbo
         log = sys.stdout.write    
 
     if add_ini_arg:
-        args = ["-i", "{0}/ini".format(publisher_dir)] + args
+        args = ["-i", config.ini_dir] + args
 
     cmd_line = string.join([cmd] + args, " ")
-    full_cmd_line = ". {0}/setup_env.sh;".format(publisher_dir) + cmd_line
-    p = subprocess.Popen(full_cmd_line,
+
+    if config.setup_script:
+        cmd_line = ". {0}; {1}".format(config.setup_script, cmd_line)
+
+    p = subprocess.Popen(cmd_line,
                          preexec_fn=_sp_preexec,
                          shell=True,
                          stdout=subprocess.PIPE,
@@ -44,7 +46,7 @@ def run_command(cmd, args, log=None, add_ini_arg=True, abort_on_fail=True, verbo
     log("command status: {0}".format(status))
     log("command output:\n{0}".format(output))
     if status != 0 and abort_on_fail:
-        raise Exception("command {0} failed, see log".format(full_cmd_line))
+        raise Exception("command {0} failed, see log".format(cmd_line))
 
     return status
 

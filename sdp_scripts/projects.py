@@ -4,6 +4,8 @@ lookups from known projects
 
 from os.path import join as opj
 
+import config
+
 class Project:
 
     def __init__(self, project_root, mapfile_depth=1):
@@ -12,11 +14,11 @@ class Project:
 
     @property
     def project_data_root(self):
-        return opj(self.project_root, "data")
+        return opj(self.project_root, config.data_subdir)
 
     @property
     def project_mapfile_root(self):
-        return opj(self.project_root, "metadata/mapfiles/by_name")
+        return opj(self.project_root, config.mapfile_subdir)
 
     def dataset_root(self, dataset_id):
         """
