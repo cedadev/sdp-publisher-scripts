@@ -53,7 +53,7 @@ def run_command(cmd, args, log=None, add_ini_arg=True, abort_on_fail=True, verbo
 
 def _sp_preexec():
     """
-    set umask and egid
+    set umask
     """
     os.umask(002)
     
