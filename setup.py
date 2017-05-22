@@ -17,6 +17,5 @@ setup(name='sdp_scripts',
             "sdp_publish.py=sdp_scripts.publish:main"
             ]
         },
-
-#      scripts=["tests/test_mapfile.sh", "tests/test_publication.sh"]
+      scripts=["tests/test_mapfile.sh", "tests/test_publication.sh"]
       )
