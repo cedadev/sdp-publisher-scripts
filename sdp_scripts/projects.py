@@ -2,29 +2,22 @@
 lookups from known projects
 """
 
-from os.path import join as opj
+import os
 
 import config
 
 class Project:
 
-    def __init__(self, project_root, mapfile_depth=1):
-        self.project_root = project_root
+    def __init__(self, data_root, mapfile_root, mapfile_depth=1):
+        self.data_root = data_root
+        self.mapfile_root = mapfile_root
         self.mapfile_depth = mapfile_depth
-
-    @property
-    def project_data_root(self):
-        return opj(self.project_root, config.data_subdir)
-
-    @property
-    def project_mapfile_root(self):
-        return opj(self.project_root, config.mapfile_subdir)
 
     def dataset_root(self, dataset_id):
         """
         Returns the top directory for a given dataset ID.
         """
-        return opj(self.project_data_root, dataset_id.replace(".", "/"))
+        return os.path.join(self.data_root, dataset_id.replace(".", "/"))
 
     def mapfile_path(self, dataset_id):
         """
@@ -32,11 +25,13 @@ class Project:
         """
         facets = dataset_id.split(".")
         filename = "{0}.map".format(dataset_id)
-        leading_dirs = opj(*facets[ : self.mapfile_depth])
-        return opj(self.project_mapfile_root, leading_dirs, filename)
+        leading_dirs = os.path.join(*facets[ : self.mapfile_depth])
+        return os.path.join(self.mapfile_root, leading_dirs, filename)
 
 if __name__ == '__main__':
-    project = Project("/group_workspaces/jasmin/esgf_fedcheck/archive/badc/cmip5", 5),
+    project = Project("/group_workspaces/jasmin/esgf_fedcheck/archive/badc/cmip5/data",
+                      "/group_workspaces/jasmin/esgf_fedcheck/archive/badc/cmip5/metadata/mapfiles/by_name/data",
+                      5),
     dsid = "cmip5rt.output1.MPI-M.MPI-ESM-MR.rcp26.mon.ocean.Omon.r1i1p1.hfds.v20120625"
     
     print project.dataset_root(dsid)

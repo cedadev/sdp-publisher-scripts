@@ -11,16 +11,17 @@ setup_script = "/group_workspaces/jasmin/esgf_fedcheck/publisher/setup_env.sh"
 # directory containing esg*.ini
 ini_dir = "/group_workspaces/jasmin/esgf_fedcheck/publisher/ini"
 
-# subdirectories of project_root that are data_root and mapfile_root respectively for each project
-data_subdir = "data"
-mapfile_subdir = "metadata/mapfiles/by_name"
-
 # dictionary of objects for known projects, which can be used to look up mapfile paths etc,
-# each instantiated using their project root and the subdirectory depth that is used when
-# storing mapfiles
+# each instantiated using their data root, mapfile root, and mapfile subdirectory depth for 
+# that project (to enable the leading part of the DRS to be used in the mapfile path)
 projects = {
-    "cmip5rt": Project("/group_workspaces/jasmin/esgf_fedcheck/archive/badc/cmip5rt", 1),
-    "cmip5": Project("/group_workspaces/jasmin/esgf_fedcheck/archive/badc/cmip5", 5),
+    "cmip5rt": Project("/group_workspaces/jasmin/esgf_fedcheck/archive/badc/cmip5rt/data",
+                       "/group_workspaces/jasmin/esgf_fedcheck/archive/badc/cmip5rt/metadata/mapfiles/by_name",
+                       1),
+
+    "cmip5": Project("/group_workspaces/jasmin/esgf_fedcheck/archive/badc/cmip5/data", 
+                     "/group_workspaces/jasmin/esgf_fedcheck/archive/badc/cmip5/metadata/mapfiles/by_name", 
+                     5),
     }
 
 # group ownership to set on mapfiles
