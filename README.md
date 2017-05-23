@@ -33,3 +33,11 @@ sausages
 ```
 
 optionally the myproxy port number can be included in the host name, e.g. `slcs1.ceda.ac.uk:7512` (not tested)
+
+## Obtaining trust roots
+
+Also you need to make sure you have a directory `$HOME/.globus/certificates` containing the correct trust roots needed to validate the host certificate. If not, by running `myproxy-login` once by hand with the `-b` (bootstrap) flag, for example:
+```
+myproxy-logon -s slcs1.ceda.ac.uk -l johndoe -b
+```
+because the script will _not_ use bootstrap option when doing a myproxy login. (This example command just uses the default location for the user certificate, as we are only interested in the trust roots at this point.)
